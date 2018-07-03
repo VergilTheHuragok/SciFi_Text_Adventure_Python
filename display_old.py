@@ -73,6 +73,7 @@ class Font:
 
 class Text:
     """Stores variables and methods for displaying pygame text"""
+
     def __init__(self, text, font=None):
         self.text = text
 
@@ -111,6 +112,6 @@ class Text:
                 return True
         return False
 
+
 class Line:
     pass
-    

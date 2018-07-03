@@ -1,6 +1,6 @@
 import pygame
 
-from configs import get_value, add_from_dict, get_config_dict
+from configs import add_from_dict, get_config_dict, get_value
 from default_configs import fonts as default_fonts
 
 fonts = {}
@@ -30,7 +30,8 @@ def get_font_dict(font_name, font_resize=0):
             "FONTS"]  # Update fonts list to include conf fonts
         if font_name not in fonts:
             # Font missing from default)_fonts/config
-            raise Exception("Font: '" + font_name + "' not found in fonts list")
+            raise Exception("Font: '" + font_name +
+                            "' not found in fonts list")
     # font_name is in fonts
     if "font object" not in fonts[font_name] or font_resize != 0:
         # Need to add pygame font object to font's dict.
@@ -105,7 +106,8 @@ class Text(object):
         dash = ""
         for char in self.text:
             word += char
-            if self.copy(word).get_dimensions(font_resize)[0] > remaining_width:
+            if self.copy(word).get_dimensions(font_resize)[0] > \
+                    remaining_width:
                 if len(word) >= 3 and word[-3] != " ":
                     dash = "-"
                     word = word[:-2]
@@ -131,7 +133,7 @@ class Text(object):
     def get_dimensions(self, font_resize=0):
         """Returns dimensions of text, generates new dimensions if necessary"""
         if isinstance(self.width, type(None)):
-            font, actual_size = get_font_dict(self.font_name, font_resize)
+            font, _ = get_font_dict(self.font_name, font_resize)
             font = font["font object"]
             self.width, self.height = font.size(self.text)
         return self.width, self.height
@@ -219,7 +221,8 @@ class Textbox:
         self.zoom_switch = None
         self.zoom_limit = None
 
-        # TODO: Allow saving of multiple self.lines for easily redisplaying tooltips?
+        # TODO: Allow saving of multiple self.lines for easily redisplaying
+        # tooltips?
 
     def within_bounds(self, pos, display):
         width = display.get_width()
@@ -246,7 +249,8 @@ class Textbox:
                     self.scroll()
 
     def scroll(self, up=True):
-        # Allow for scroll amounts of less than zero which scroll every interval
+        # Allow for scroll amounts of less than zero which scroll every
+        # interval
         ctrl_held = pygame.key.get_mods() & pygame.KMOD_CTRL
         if ctrl_held:
             if not up:
@@ -339,7 +343,8 @@ class Textbox:
             else:
                 _x = x
                 for word in line:
-                    word_size = word.render(display, (_x, _y), self.font_resize)
+                    word_size = word.render(
+                        display, (_x, _y), self.font_resize)
                     if not isinstance(word_size, type(None)):
                         if word_size == max_font_size:
                             self.zoom_limit = 1
@@ -439,7 +444,7 @@ class Textbox:
                             # Remove previously added empty line
                             self.lines.pop()
                         previous_width = self.get_line_dimensions(self.lines[
-                                                                      -1])[0]
+                            -1])[0]
                         char_line_width = previous_width + char_width
                         can_fit_char = char_line_width < self.width
                         previous_line_exists = len(self.lines[-1]) > 0
@@ -449,14 +454,14 @@ class Textbox:
                                 endswith("\n")
                         if previous_line_exists and can_fit_char \
                                 and not previous_newline:
-                                # Previous line has room for chars,
-                                # not newline char
-                                words.pop(0)
-                                for w in word.break_line(
-                                        self.width - previous_width,
-                                        self.font_resize)[::-1]:
-                                    words.insert(0, w)
-                                continue
+                            # Previous line has room for chars,
+                            # not newline char
+                            words.pop(0)
+                            for w in word.break_line(
+                                    self.width - previous_width,
+                                    self.font_resize)[::-1]:
+                                words.insert(0, w)
+                            continue
                         else:
                             self.lines.append([])
                             words.pop(0)

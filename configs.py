@@ -66,8 +66,7 @@ def get_subheader_range(header, subheader, config_string=None):
     start_ind = section.find("#" + subheader + "\n")
     if start_ind == -1:
         raise Exception("Subheader: '" + subheader + "' not found under "
-                                                     "header: '" + header
-                        + "' to search")
+                        "header: '" + header + "' to search")
     end_ind1 = section.find("#", start_ind + 1)  # Find next sub ind
     end_ind2 = section.find("§", start_ind)  # Find next header ind
     if end_ind1 == -1 and end_ind2 == -1:
@@ -91,9 +90,9 @@ def get_key_range(header, subheader, key, config_string=None):
 
     start_ind = section.find(key + " = ")
     if start_ind == -1:
-        raise Exception("Key: '" + key + "' not found under subheader: '"
-                        + subheader + "' under header: '" + header
-                        + "' to search")
+        raise Exception("Key: '" + key + "' not found under subheader: '" +
+                        subheader + "' under header: '" + header +
+                        "' to search")
     end_ind = section.find("\n", start_ind)  # Find value end
     if end_ind == -1:
         # Could not find end of value
@@ -122,8 +121,8 @@ def get_ind(header, subheader, key, default_val="No Value Given"):
                 config_string += "\n"
             config_string += "§" + header + "\n"
         else:
-            raise Exception("Could not find header: '"
-                            + header + "' and no value was given to input")
+            raise Exception("Could not find header: '" + header +
+                            "' and no value was given to input")
     # Header has been found or created
     start_ind, end_ind = get_header_range(header, config_string)
     if config_string.find("#" + subheader + "\n", start_ind, end_ind) == -1:
@@ -131,11 +130,11 @@ def get_ind(header, subheader, key, default_val="No Value Given"):
         if has_default:
             config_parts = [config_string[:end_ind], config_string[end_ind:]]
             config_string = config_parts[
-                                0] + "#" + subheader + "\n" + config_parts[1]
+                0] + "#" + subheader + "\n" + config_parts[1]
         else:
-            raise Exception("Could not find subheader: '"
-                            + subheader + "' under header: '" + header
-                            + "' and no value was given to input")
+            raise Exception("Could not find subheader: '" + subheader +
+                            "' under header: '" + header +
+                            "' and no value was given to input")
     # Subheader has been found or created
     start_ind, end_ind = get_subheader_range(header, subheader, config_string)
     key_ind = config_string.find(key + " = ", start_ind, end_ind)
@@ -148,10 +147,10 @@ def get_ind(header, subheader, key, default_val="No Value Given"):
                     0] + key + " = " + default_val + "\n" + config_parts[1]
             added_value = True
         else:
-            raise Exception("Could not find key: '"
-                            + key + "' under subheader: '" + subheader
-                            + "' under header: '" + header
-                            + "'and no value was given to input")
+            raise Exception("Could not find key: '" + key +
+                            "' under subheader: '" + subheader +
+                            "' under header: '" + header +
+                            "'and no value was given to input")
     # Key found
     start_ind, end_ind = get_key_range(header, subheader, key, config_string)
 
@@ -175,7 +174,7 @@ def add_value(header, subheader, key, value):
     # Key is already in config, replace value in index range with new value
     config_string = get_config_string()
     config_string = config_string[:indexes[0]] + value + config_string[
-                                                         indexes[1]:]
+        indexes[1]:]
     config = open(get_game_root() + "config.txt", "w")
     config.write(config_string)
     config.close()
@@ -276,13 +275,13 @@ def gen_random_config():
         header = ''.join(random.choices(string.ascii_uppercase + string.digits,
                                         k=random.randint(1, 10)))
         for j in range(0, random.randint(1, 5)):
-            subheader = ''.join(random.choices(string.ascii_letters
-                                               + string.digits,
+            subheader = ''.join(random.choices(string.ascii_letters +
+                                               string.digits,
                                                k=random.randint(1, 10)))
             for k in range(0, random.randint(1, 5)):
-                key = ''.join(random.choices(string.ascii_letters
-                                             + string.digits,
-                                             k=random.randint(1, 10)))
+                key = ''.join(random.choices(
+                    string.ascii_letters + string.digits,
+                    k=random.randint(1, 10)))
                 for l in range(0, random.randint(1, 3)):
                     value = ''.join(
                         random.choices(string.ascii_letters + string.digits,

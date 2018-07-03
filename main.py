@@ -27,10 +27,16 @@ pygame.init()
 tb = Textbox("test", .1, .1, .9, .9)
 
 for fontname in pygame.font.get_fonts():
-    add_from_dict(
-        {"FONTS": {fontname: {"name": fontname, "size": 20, "color": (255, 255, 255), "highlight color": (0,0,0,255)}}})
-tb.add_text_list([Text(fontname + " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890!@#$%^&*()-=_+[]{}\\|:\";',.<>/?\n", font_name=fontname) for fontname in
-                  pygame.font.get_fonts()])
+    add_from_dict({"FONTS": {fontname: {"name": fontname, "size": 20,
+                                        "color": (255, 255, 255),
+                                        "highlight color": (0, 0, 0, 255)}}})
+tb.add_text_list(
+    [Text(fontname +
+          " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890!"
+          "@#$%^&*()-=_+[]{}\\|:\";',.<>/?\n", font_name=fontname
+          )
+     for fontname in
+     pygame.font.get_fonts()])
 
 # chars = ""
 # code = 1
@@ -84,7 +90,8 @@ while not quit:
             quit = True
         elif event.type == pygame.VIDEORESIZE:
             width, height = event.dict["size"]
-            display = pygame.display.set_mode([width, height], pygame.RESIZABLE)
+            display = pygame.display.set_mode(
+                [width, height], pygame.RESIZABLE)
         elif event.type == pygame.KEYDOWN:
             # tb.add_text_list([Text(gen_word(), gen_font())])
             pass
