@@ -193,7 +193,7 @@ def get_value(header, subheader, key, default_val="No Value Given"):
     indexes = get_ind(header, subheader, key, default_val)
     config_string = get_config_string()
     value = config_string[indexes[0]:indexes[1]]
-    return eval(value)
+    return eval(value)  # TODO: Reset value if error on eval
 
 
 def get_headers():
